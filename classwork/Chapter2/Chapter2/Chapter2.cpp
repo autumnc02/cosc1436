@@ -9,7 +9,7 @@ int main()
 {
     std::cout << "Hello World " << " " << "Your Name" << std::endl;
     std::cout << "You are " << 20 << " years old" << std::endl;
-std::string name; 
+    std::string name;
     name = "Name";
     std::cout << "Hello World" << name;
 
@@ -43,7 +43,7 @@ std::string name;
     //std::string circleName;
 
    //Now I can use the variables
-    
+
     //Inline - variable are eclared just before they are used
     int radius, diameter;
     //Use radius, diameter
@@ -60,9 +60,24 @@ std::string name;
     bool isPassing;
     isPassing = true;
 
+    area = length * width;
+
     //Assignment is right associative
     //length = 100;
     //width = 100;
     length = width = 100;
+
+    //Arithmetic operators
+    // arith-op ::= + | - | * | / | %
+    length = length + 10;
+    width = width - 20;
+
+    //int dvision ::= int / int produces an int, remainder is lost
+    double result = 10 / 3; // = 3
+
+    // Modulus is remainder and ONLY works for integral types
+    double remainder = 10 % 3; 
+
+    int negativeLength = -length;
 }
 
