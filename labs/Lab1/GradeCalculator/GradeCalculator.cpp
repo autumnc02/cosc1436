@@ -11,17 +11,37 @@ int main()
     std::cout << "Lab1" << std::endl;
     std::cout << "COSC 1436 Fall 2025" << std::endl;
 
+    std::cout << "Enter your name: ";
+    
+    std::string name;
+    std::cin >> name;
 
+    std::cout << "Enter lab1: ";
+    int lab1;
+    std::cin >> lab1;
+
+    std::cout << "Enter lab2: ";
+    int lab2;
+    std::cin >> lab2;
+
+    std::cout << "Enter lab3: ";
+    int lab3;
+    std::cin >> lab3;
+
+    std::cout << "Enter lab4: ";
+    int lab4;
+    std::cin >> lab4;
+
+    std::cout << "Enter exam1: ";
+    int exam1;
+    std::cin >> exam1;
+
+    std::cout << "Enter exam2: ";
+    int exam2;
+    std::cin >> exam2;
+
+    std::cout << "Enter exam3: ";
+    int exam3;
+    std::cin >> exam3;
 
 }
-
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
