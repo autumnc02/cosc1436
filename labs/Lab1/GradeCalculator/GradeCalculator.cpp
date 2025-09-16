@@ -1,11 +1,18 @@
-// GradeCalculator.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
-
+/*Autumn Cummo
+* Lab1
+* COSC 1436 Fall 2025
+*/
 #include <iostream>
 
 int main()
 {
-    std::cout << "Hello World!\n";
+
+    std::cout << "Autumn Cummo" << std::endl;
+    std::cout << "Lab1" << std::endl;
+    std::cout << "COSC 1436 Fall 2025" << std::endl;
+
+
+
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
