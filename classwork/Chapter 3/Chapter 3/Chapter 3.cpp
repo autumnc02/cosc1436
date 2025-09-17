@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <cmath>
+#include <iomanip>
 
 void main()
 {
@@ -11,15 +12,19 @@ void main()
 
     // Function X  Y  Result
     //------------------------
-    std::cout << "Function " << " X " << " Y " << "Result" << std::endl;
-    std::cout << "-----------------------------------------" << std::endl;
+    std::cout << std::fixed;
+    std::cout << std::setw(9) << "Function " << std::setw(7) << " X " << std::setw(7) << " Y " << std::setw(12) << "Result" << std::endl;
+   
 
-    std::cout << "pow " << x << y << pow(x, y) << std::endl;
-    std::cout << "sqrt " << x << y << sqrt(x) << std::endl;
+    std::cout << std::setw(9) << "pow " << std::setw(7) << x << std::setw(7) << y << std::setw(12) << pow(x, y) << std::endl;
+    std::cout << std::setw(9) << "sqrt " << std::setw(7) << x << std::setw(7) << y << std::setw(12) << sqrt(x) << std::endl;
 
 
-    std::cout << "ceil " << x << y << ceil(x) << std::endl;
-    std::cout << "floor 
+    std::cout << std::setw(9) << "ceil " << std::setw(7) << x << std::setw(7) << y << std::setw(12) << ceil(x) << std::endl;
+    std::cout << std::setw(9) << "floor " << std::setw(7) << x << std::setw(7) << y << std::setw(12) << floor(x) << std::endl;
+
+    std::cout << std::setw(9) << "round " << std::setw(7) << x << std::setw(7) << y << std::setw(12) << round(x) << std::endl;
+    std::cout << std::setw(9) << "trunc " << std::setw(7) << x << std::setw(7) << y << std::setw(12) << trunc(x) << std::endl;
 
 
 }
@@ -43,7 +48,7 @@ void ExpressionDemo()
     std::cout << "Area = " << area << std::endl;
 
     //Triangle
-    std::cout << "Eter base and height of triangle: ";
+    std::cout << "Enter base and height of triangle: ";
 
     int base = 0, height = 0;
     //std::cin >> base;
