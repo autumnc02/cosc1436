@@ -32,13 +32,17 @@ int main()
         runLength = 0;
     };
 
-    std::cout << "Enter the release year (900-2100): ";
+    std::cout << "Enter the release year (1900-2100): ";
     std::cin >> releaseYear;
     if (releaseYear < 1900)
     {
         std::cout << "Release year must be at least 1900" << std::endl;
         releaseYear = 1900;
-    };
+    } else if (releaseYear > 2100)
+    {
+        std::cout << "Release year must be between 1900 and 2100" << std::endl;
+        releaseYear = 1900,
+    }
 
 
     std::cout << "Enter the optional description: ";
@@ -50,10 +54,19 @@ int main()
     std::cout << "Is this a classic (Y/N)? ";
     std::string input;
     std::cin >> input;
-    if (_strcmpi(input.c_str(), "Y") == 0)
-        isClassic = true
+   /* if (_strcmpi(input.c_str(), "Y") == 0)
+        isClassic = true;
     if (_strcmpi(input.c_str(), "N") == 0)
-        isClassic = false
+        isClassic = false;
+    else
+        std::cout << "You must enter either Y or N";*/
+    if (_strcmpi(input.c_str(), "Y") == 0)
+        isClassic = true;
+    else
+        if (_strcmpi(input.c_str(), "N") == 0)
+            isClassic = false;
+        else
+            std::cout << "You must enter either Y or N";
     //TODO: Handle other values
 }
 
