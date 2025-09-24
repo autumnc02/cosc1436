@@ -68,7 +68,7 @@ int main()
     {
         std::cout << "Rating must be between 1.0 and 10.0" << std::endl;
         userRating = 10.0;
-    }*/
+    }*/ 
 
     std::cout << "Is this a classic (Y/N)? ";
     std::string input;
