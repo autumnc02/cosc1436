@@ -3,6 +3,8 @@
 * COSC 1436 Fall 2025
 */
 #include <iostream>
+#include <string>
+#include <iomanip>
 
 int main()
 {
@@ -60,19 +62,21 @@ int main()
 
 
     std::cout << name << ", your class grade is: " << std::endl;
-    int labAverage = (lab1 + lab2 + lab3 + lab4) / 4;
-    std::cout << "Lab Average (65%) = " << labAverage << std::endl;
+    double labAverage = (lab1 + lab2 + lab3 + lab4) / 4.0;
+    std::cout << std::setprecision(2);
+    std::cout << "Lab Average (65%) = " << labAverage << "%" << std::endl;
 
-    int examAverage = (exam1 + exam2 + exam3) / 3;
-    std::cout << "Exam Average (20%) = " << examAverage << std::endl;
+    double examAverage = (exam1 + exam2 + exam3) / 3.0;
+    std::cout << std::setprecision(2);
+    std::cout << "Exam Average (20%) = " << examAverage << "%" << std::endl;
 
+    std::cout << "Participation (5%) = " << participation << "%" << std::endl;
 
-    std::cout << "Participation (5%) = ";
+    std::cout << "Final Exam (10%) = " << finalExam << "%" << std::endl;
 
-
-    std::cout << "Final Exam (10%) = ";
-
-    std::cout <<
+    double classAverage = (labAverage * 0.65) + (examAverage * 0.20) + (participation * 0.05) + (finalExam * 0.10);
+    std::cout << std::fixed << std::setprecision(2);
+    std::cout << "Class Average = " << classAverage << "%" << std::endl;
 
 
 
