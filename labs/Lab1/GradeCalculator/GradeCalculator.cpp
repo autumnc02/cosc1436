@@ -8,7 +8,6 @@
 
 int main()
 {
-
     std::cout << "Lab 1" << std::endl;
     std::cout << "Autumn Cummo" << std::endl;
     std::cout << "COSC 1436 Fall 2025" << std::endl << std::endl;
