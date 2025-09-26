@@ -44,22 +44,22 @@ int main()
     //};
     switch (choice)
     {
-        case 'A': std::cout << "Add not implemented" << std::endl; break;
-        case 'a': std::cout << "Add not implemented" << std::endl; break;
+        case 'A': std::cout << "Add not implemented" << std::endl;
+        case 'a': std::cout << "Add not implemented" << std::endl;
 
-        case 'V': std::cout << "View not implemented" << std::endl; break;
-        case 'v': std::cout << "View not implemented" << std::endl; break;
+        case 'V': std::cout << "View not implemented" << std::endl;
+        case 'v': std::cout << "View not implemented" << std::endl;
 
-        case 'D': std::cout << "Delete not implemented" << std::endl; break;
-        case 'd': std::cout << "Delete not implemented" << std::endl; break;
+        case 'D': std::cout << "Delete not implemented" << std::endl;
+        case 'd': std::cout << "Delete not implemented" << std::endl;
 
-        case 'E': std::cout << "Edit not implemented" << std::endl; break;
-        case 'e': std::cout << "Edit not implemented" << std::endl; break;
+        case 'E': std::cout << "Edit not implemented" << std::endl;
+        case 'e': std::cout << "Edit not implemented" << std::endl;
 
         case 'Q': return 0;
         case 'q': return 0;
 
-        default: std::cout << "Invalid choice" << std::endl; break;
+        default: std::cout << "Invalid choice" << std::endl;
     };
 
 
