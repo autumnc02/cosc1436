@@ -18,14 +18,32 @@ struct Movie
     std::string genres;          //Optional (comma seperated list of genres)
 };
 
+/// <summary>Displays an error message.</summary>
+/// <param name="message">Message to display.</param>
+void DisplayError (std::string message )
+{
+    std::cout << "\033[91m" 
+              << "ERROR: " << message 
+              << "\033[0m"
+              << std::endl;
+};
+
+/// <summary>Displays a warning message.</summary>
+/// <param name="message">Message to display.</param>
+void DisplayWarning (std::string message )
+{
+    std::cout << "\033[93m"
+              << message
+              << "\033[0m"
+              << std::endl;
+};
+
 /// <summary>View details of a movie.</summary>
 /// <remarks>
 /// More details including paragraphs of data if you want
 /// <remarks>
-void ViewMovie()
+void ViewMovie ( Movie movie )
 {
-    Movie movie;
-
     // View movie
     //   Title (Year)
     //   Run length # min
@@ -56,7 +74,7 @@ void AddMovie()
     //Title is required
     while (movie.title == "")
     {
-        std::cout << "Title is required" << std::endl;
+        DisplayError("Title is required");
         std::getline(std::cin, movie.title);
     }
 
@@ -67,13 +85,10 @@ void AddMovie()
 
         //Error
         if (movie.runLength < 0)
-        {
-            std::string message = "Run length must be at least 0";
-            std::cout << "ERROR: " << message << std::endl;
-        }
+            DisplayError("Run length must be at least 0");
 
 
-    } while (movie.runLength < 0);
+    }while (movie.runLength < 0);
 
     std::cout << "Enter the release year (1900-2100): ";
     std::cin >> movie.releaseYear;
@@ -81,7 +96,7 @@ void AddMovie()
 
     while (movie.releaseYear < 1900 || movie.releaseYear > 2100)
     {
-        std::cout << "Release year must be between 1900 and 2100" << std::endl;
+       DisplayError("Release year must be between 1900 and 2100");
 
         std::cin >> movie.releaseYear;
     }
@@ -120,17 +135,17 @@ void AddMovie()
             movie.isClassic = false;
             break;
         } else {
-            std::cout << "You must enter either Y or N";
+            DisplayError("You must enter either Y or N");
             std::cin >> input;
         }
     }
-}
+};
 
 int main()
 {
     //Display main menu
-    bool done = false; 
-    do 
+    bool done = false;
+    do
     {
         std::cout << "Movie Library" << std::endl;
         std::cout << "______________" << std::endl;
@@ -143,24 +158,26 @@ int main()
         char choice;
         std::cin >> choice;
 
+        Movie movie;
+
         switch (choice)
         {
-            case 'A': 
+            case 'A':
             case 'a': AddMovie(); break;
 
-            case 'V': 
+            case 'V':
             case 'v': ViewMovie(); break;
-            
-            case 'D': 
-            case 'd': std::cout << "Delete not implemented" << std::endl; done = true; break;
 
-            case 'E': 
-            case 'e': std::cout << "Edit not implemented" << std::endl; done = true; break;
+            case 'D':
+            case 'd': DisplayWarning("Delete not implemented"); break;
 
-            case 'Q': 
+            case 'E':
+            case 'e': DisplayWarning("Edit not implemented"); break;
+
+            case 'Q':
             case 'q': done = true;
 
-            default: std::cout << "Invalid choice" << std::endl; break;
+            default: DisplayError("Invalid choice"); break;
         };
     } while (!done);
-}
+};
