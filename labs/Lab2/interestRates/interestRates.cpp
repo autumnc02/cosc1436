@@ -48,7 +48,7 @@ int main()
     //Display first year
          //Header
     std::cout << std::fixed << std::setprecision(2);
-    std::cout << std::setw(10) << std::left << "Month" << std::setw(12) << "Balance"  
+    std::cout << std::setw(10) << std::left << "Month" << std::setw(12) << "Balance"  << std::setw(12) << "Payment"
               << std::setw(12) << "Interest" << std::setw(12) << "New Balance" << std::endl;
     std::cout << std::setw(70) << std::setfill('-') << "" << std::setfill(' ') << std::endl;
 
@@ -60,20 +60,34 @@ int main()
     {
         if (month == 1)
         {
-            interest = 0.0;
-        } else
+            std::cout << std::setw(10) << std::left << month << "$" << std::setw(12) << loanBalance
+                      << "$" << std::setw(12) << 0.0 << "$" << std::setw(12) << 0.0 << "$" << std::setw(12) << loanBalance
+                      << std::endl;
+            continue;
+        } 
+        if (loanBalance > 0.0)
         {
             interest = loanBalance * (interestRate / 100.0);
+        } else if (loanBalance < 0.0)
+        {
+            payment = loanBalance;
+            interest = 0.0;
         }
-        newBalance = loanBalance + interest;
+        if (newBalance > 0.0)
+        {
+            newBalance = (loanBalance - payment) + interest;
+        } else if (newBalance < 0.0)
+        {
+            newBalance = 0.0;
+        }
+    
 
-        std::cout << std::setw(10) << std::left << month << "$" << std::setw(12) << loanBalance
+        std::cout << std::setw(10) << std::left << month << "$" << std::setw(12) << loanBalance << "$" << std::setw(12) << payment
                   << "$" << std::setw(12) << interest << "$" << std::setw(12) << newBalance << std::endl;
 
         loanBalance = newBalance;
     }
 
-        
       
 }
 
