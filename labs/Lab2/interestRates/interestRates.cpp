@@ -46,13 +46,13 @@ int main()
     }
 
     //Display first year
-         //Header
+          //Header
     std::cout << std::fixed << std::setprecision(2);
     std::cout << std::setw(10) << std::left << "Month" << std::setw(12) << "Balance"  << std::setw(12) << "Payment"
               << std::setw(12) << "Interest" << std::setw(12) << "New Balance" << std::endl;
     std::cout << std::setw(70) << std::setfill('-') << "" << std::setfill(' ') << std::endl;
 
-         //Variables
+          //Variables
     double interest = 0.0;
     double newBalance = loanBalance;
     double totalInterest = 0.0;
@@ -60,7 +60,7 @@ int main()
 
     for (int month = 1; month <= 12; month++)
     {
-         //Month 1 only
+          //Month 1 only
         if (month == 1)
         {
             std::cout << std::setw(10) << std::left << month << "$" << std::setw(12) << loanBalance
@@ -68,17 +68,20 @@ int main()
                       << std::endl;
             continue;
         } 
+
           //Keeps showing 0 when balance = 0
         if (loanBalance <= 0.0)
         {
             interest = 0.0;
             newBalance = 0.0;
         }
+
           //Keeps payment from exceeding loan balance
         if (payment > loanBalance)
         {
             payment = loanBalance;
         }
+
           //Interest and new balance formulas
         interest = (newBalance - payment) * (interestRate / 100.0);
         newBalance = (loanBalance - payment) + interest;
@@ -88,6 +91,7 @@ int main()
         {
             newBalance = 0.0;
         }
+
           //Calculating totals
         totalInterest += interest;
         totalPayments += payment;
@@ -96,10 +100,10 @@ int main()
         std::cout << std::setw(10) << std::left << month << "$" << std::setw(12) << loanBalance << "$" << std::setw(12) << payment
                   << "$" << std::setw(12) << interest << "$" << std::setw(12) << newBalance << std::endl;
 
-         //Updates balance for the next month
+          //Updates balance for the next month
         loanBalance = newBalance;
     }
-        //Display totals
+          //Display totals
     std::cout << std::fixed << std::setprecision(2);
     std::cout << std::setw(10) << std::left << "Total" << std::setw(13) << " " << "$" << std::setw(12) << totalPayments
               << "$" << std::setw(12) << totalInterest << std::setw(12) << " " << std::endl;
