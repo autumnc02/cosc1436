@@ -207,10 +207,60 @@ void EditMovie(Movie& movie)
     DisplayWarning("Not implemented yet");
 }
 
+//Test function overloading
+void Display(int value)
+{
+    std::cout << "int" << std::endl;
+}
+
+void Display(double value)
+{
+    std::cout << "double" << std::endl;
+}
+
+void Display(float value)
+{
+    std::cout << "float" << std::endl;
+}
+
+void Display(short value1, double value2)
+{
+    std::cout << "int, double" << std::endl;
+}
+
+void Display(short value, float)
+{
+    std::cout << "short, float" << std::endl;
+}
+
+void Display(int, short)
+{
+    std::cout << "int, short" << std::endl;
+}
+
+void Display(short, int)
+{
+    std::cout << "short, int" << std::endl;
+}
+
+//void TestFunctionOverloading()
+//{
+//    Display(10);   // Display(int)
+//    Display(4.56); // Display(double)
+//    Display((short)34);  // Display(int) -> shortest type coercion
+//    Display(10, 4.56F);  // Display(int, double)
+//    Display(1000000000L, 4.56);  // Display(int, double)
+//    Display('c', 4.56F);  // Display(short, float)
+//    Display((short)5, (short)10);
+//}
+
 int main()
 {
-    //Display main menu
+   //TODO: Leaving thid for now to avoid breking code
     Movie movie;
+    Movie movies[100];
+
+    //Display main menu
     bool done = false;
     do
     {
