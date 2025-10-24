@@ -256,9 +256,12 @@ void Display(short, int)
 
 int main()
 {
+    //Cannot calculate the size of an array at runtime so use a const int variable
+    const int MaximumMovies = 100;
+
    //TODO: Leaving thid for now to avoid breking code
     Movie movie;
-    Movie movies[100];
+    Movie movies[MaximumMovies];
 
     //Display main menu
     bool done = false;
