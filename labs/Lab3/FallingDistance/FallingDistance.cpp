@@ -21,28 +21,91 @@ void ProgramInfo()
 /// <returns></returns>
 int FallingTime()
 {
-    int timeSeconds;
+    int totalTime;
 
     do
     {
         std::cout << "Please enter the number of seconds: ";
-        std::cin >> timeSeconds;
+        std::cin >> totalTime;
 
-        if (timeSeconds >= 1 && timeSeconds <= 60)
+        if (totalTime >= 1 && totalTime <= 60)
             break;
+        else
         std::cout << "ERROR" << std::endl;
     } while (true);
     
-    return timeSeconds;
+    return totalTime;
+}
+
+/// <summary>Calculates falling distance.</summary>
+/// <param name="t"></param>
+/// <returns></returns>
+double CalculateDistance(int t)
+{
+    const double g = 9.8; //meters
+    double fallingDistance = 0.5 * g * (t * t);
+    return fallingDistance;
+}
+
+double ConvertToFeet(double fallingDistance)
+{
+    return fallingDistance * 3.28084;
 }
 
 
+
+/// <summary>Displays the table.</summary>
+/// <param name="totalTime"></param>
+void DisplayTable(int totalTime, char unitChoice)
+{
+    std::cout << std::fixed << std::setprecision(2);
+
+    //Header
+    std::cout << std::setw(10) << std::left << "Seconds" << std::right << std::setw(12) << "Distance" << std::endl;
+    std::cout << "======================================" << std::endl;
+   
+    for (int t = 1; t <= totalTime; t++)
+    {
+        double fallingDistance = CalculateDistance(t);
+
+
+
+        std::cout << std::setw(10) << std::left << t << std::right << std::setw(12) << fallingDistance << unitChoice << std::endl;
+    }
+}
 
 int main()
 {
     ProgramInfo();
 
-    FallingTime();
+    /////////////////////
+    int totalTime = FallingTime();
+
+    // Get units
+    char unitChoice;
+
+    do
+    {
+        std::cout << "Do you want the results in meters or feet? ";
+        std::cin >> unitChoice;
+
+        if (unitChoice == 'M' || unitChoice == 'm')
+        {
+            break;
+        }
+        else if (unitChoice == 'F' || unitChoice == 'f')
+        {
+            break;
+        }
+        else
+        {
+            std::cout << "Invalid value" << std::endl;
+        } 
+    } while (true);
+
+    int fallingDistance = CalculateDistance(totalTime);
+
+    DisplayTable(totalTime);
     
 }
 
