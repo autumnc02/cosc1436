@@ -105,7 +105,7 @@ int main()
 
     int fallingDistance = CalculateDistance(totalTime);
 
-    DisplayTable(totalTime);
+    DisplayTable(totalTime, unitChoice);
     
 }
 
