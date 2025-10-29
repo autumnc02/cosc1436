@@ -17,8 +17,8 @@ void ProgramInfo()
     std::cout << "______________________" << std::endl;
 }
 
-/// <summary>Prompt for falling time.</summary>
-/// <returns></returns>
+/// <summary>Prompt for falling time in seconds.</summary>
+/// <returns>Returns the validated time.</returns>
 int FallingTime()
 {
     int totalTime;
@@ -38,8 +38,8 @@ int FallingTime()
 }
 
 /// <summary>Calculates falling distance.</summary>
-/// <param name="t"></param>
-/// <returns></returns>
+/// <param name="t">Time in seconds.</param>
+/// <returns>Returns the falling distance in meters.</returns>
 double CalculateDistance(int t)
 {
     const double g = 9.8; //meters
@@ -47,30 +47,71 @@ double CalculateDistance(int t)
     return fallingDistance;
 }
 
+/// <summary>Calculates velocity.</summary>
+/// <param name="t">Time in seconds.</param>
+/// <returns>Returns velocity in meters per second.</returns>
+double CalculateVelocity(int t)
+{
+    const double g = 9.8;
+    double velocity = g * t;
+
+    if (velocity > 90)
+        velocity = 90;
+
+    return velocity;
+}
+
+/// <summary>Converts meters to feet.</summary>
+/// <param name="fallingDistance">Distance in meters.</param>
+/// <returns>Returns the equivalent distance in feet.</returns>
 double ConvertToFeet(double fallingDistance)
 {
     return fallingDistance * 3.28084;
 }
 
-
-
-/// <summary>Displays the table.</summary>
-/// <param name="totalTime"></param>
+/// <summary>Displays a table of time, distance and velocity.</summary>
+/// <param name="totalTime">Total time in seconds.</param>
+/// <param name="unitChoice">Chosen unit of measurement.</param>
 void DisplayTable(int totalTime, char unitChoice)
 {
     std::cout << std::fixed << std::setprecision(2);
 
     //Header
-    std::cout << std::setw(10) << std::left << "Seconds" << std::right << std::setw(12) << "Distance" << std::endl;
+    std::cout << std::setw(10) << std::left << "Seconds" << std::right << std::setw(12) << "Distance" << std::setw(13) << "Velocity"
+              <<  std::endl;
     std::cout << "======================================" << std::endl;
    
     for (int t = 1; t <= totalTime; t++)
     {
         double fallingDistance = CalculateDistance(t);
+        double velocity = CalculateVelocity(t);
 
+        if (unitChoice == 'F' || unitChoice == 'f')
+        {
+            fallingDistance = ConvertToFeet(fallingDistance);
+            velocity = ConvertToFeet(velocity);
+        }
 
+        if (velocity > 90)
+        {
+            velocity = 90;
+        }
 
-        std::cout << std::setw(10) << std::left << t << std::right << std::setw(12) << fallingDistance << unitChoice << std::endl;
+        std::string distanceUnit;
+        std::string velocityUnit;
+
+        if (unitChoice == 'F' || unitChoice == 'f')
+        {
+            distanceUnit = "ft";
+            velocityUnit = "ft/s";
+        } else
+        {
+            distanceUnit = "m";
+            velocityUnit = "m/s";
+        }
+
+        std::cout << std::setw(10) << std::left << t << std::right << std::setw(10) << fallingDistance <<  distanceUnit
+            << std::setw(11) << velocity << velocityUnit << std::endl;
     }
 }
 
@@ -78,7 +119,7 @@ int main()
 {
     ProgramInfo();
 
-    /////////////////////
+    //////////////////////////////
     int totalTime = FallingTime();
 
     // Get units
@@ -103,8 +144,7 @@ int main()
         } 
     } while (true);
 
-    int fallingDistance = CalculateDistance(totalTime);
-
+    ////////////////////////////////////
     DisplayTable(totalTime, unitChoice);
     
 }
