@@ -31,7 +31,6 @@ enum class ForegroundColor {
 };
 
 //Function prototypes
-//Forward declarations/referencing
 void DisplayError(std::string);
 
 void ResetTextColor()
@@ -86,6 +85,10 @@ void DisplayWarning (std::string message)
     ResetTextColor();
 };
 
+/// <summary>Reads an integer from the terminal.</summary>
+/// <param name="minimumValue">Minimum value</param>
+/// <param name="maximumValue">Maximum value</param>
+/// <returns>Integer value provided by user</returns>
 int ReadInt( int minimumValue, int maximumValue )
 {
     do
@@ -100,11 +103,18 @@ int ReadInt( int minimumValue, int maximumValue )
     } while (true);
 }
 
+/// <summary>Reads an integer from the terminal.</summary>
+/// <param name="minimumValue">Minimum value</param>
+/// <returns>Intger value provided by the user</returns>
 int ReadInt(int minimumValue)
 {
     return ReadInt(minimumValue, INT_MAX);
 }
 
+/// <summary>Reads a string from the terminal.</summary>
+/// <param name="message">Message to show</param>
+/// <param name="isRequired">true if the input is required</param>
+/// <returns>String value provided by user.</returns>
 std::string ReadString(std::string message, bool isRequired)
 {
     std::cout << message;
@@ -122,6 +132,28 @@ std::string ReadString(std::string message, bool isRequired)
     return input;
 }
 
+/// <summary>Adds a movie to an array.</summary>
+/// <param name="movies">Array</param>
+/// <param name="size">Size of the array</param>
+/// <param name="movie">Movie to add</param>
+/// <returns>Index of new movie if inserted or -1 otherwise.</returns>
+int AddToMovieArray(Movie movies[], int size, Movie movie)
+{
+    //Enumerate the array looking for the first blank movie
+    for (int index = 0; index < size; ++index)
+    {
+        if (movies[index].title == "")
+        {
+            //Set the array element
+            movies[index] = movie;
+            return index;
+        }
+    }
+
+    DisplayError("No space available for new movie");
+    return -1;
+}
+
 /// <summary>View details of a movie.</summary>
 /// <remarks>
 /// More details including paragraphs of data if you want
@@ -130,7 +162,7 @@ void ViewMovie (Movie movie)
 {
     if (movie.title == "")
     {
-        DisplayWarning("No movie exits");
+        DisplayWarning("No movies exit");
         return;
     }
 
@@ -204,7 +236,6 @@ void DeleteMovie()
         return;
 
     //TODO: Delete movie
-    //DisplayWarning("Not implemented yet");
     movie.title = "";
 }
 
@@ -213,35 +244,81 @@ void EditMovie()
     DisplayWarning("Not implemented yet");
 }
 
-int AddToMovieArray(Movie movies[], int size, Movie movie)
-{
-    //Enumerate the array looking for the first blank movie
-    for (int index = 0; index < size; ++index)
-    {
-        if (movies[index].title == "")
-        {
-            //Set the array element
-            movies[index] = movie;
-            return index;
-        }
-    }
-
-    DisplayError("No space available for new movie");
-    return -1;
-}
-
 void PointerDemo()
 {
     int localInt = 1234;
 
-    //Pointer to an int, 
-    int* pInt;
+    //Pointer - memory address
+    //Data points
+    //  Pointer value is a memory address (8 bytes)
+    //  Value pointed to by pointer (dereferenced value) is int (4 bytes)
+    // pointer_decl ::= T* id
+    int* pInt;              //Pointer to an int
     pInt = &localInt;
 
     localInt = 9876;
 
     // Derefrencing a pointer returns the original T value
+    //   dereference_op := *ptr
     *pInt = 5678;
+
+    //An uninitialized pointer points to garbage
+    // Initialize pointer to memory 0 which is invalid
+    //  NULL - C version, not preferred as it is still an int
+    //  nullptr - preferred in C++
+    //float* pFloat = NULL;
+    float* pFloat = nullptr;
+    //pFloat = 0;   Dont do this
+    //pFloat = 1234;
+
+    //Always ensure pointer is valid (not null) before dereferencing
+    //if (pFloat != nullptr) {
+    if (pFloat) {
+        //This is going to crash hard if pointer is NULL
+        *pFloat = 123.45;
+    }
+
+    //Initializing a pointer
+    // nullptr
+    float localFloat = 123.45;
+
+    //Initializing a pointer to a local variable or parameter
+    pFloat = &localFloat;  //Address of localFloat, must be a variable
+    *pFloat = 456.78;   //localFloat = 456.78
+
+    //Initialize a pointer to an array element
+    float someFloats[10] = {0};
+    pFloat = &someFloats[1];   //Ptr references second element
+
+    //Compiler error, types must exactly match
+    //pFloat = pInt;   //  float* = int*
+
+    //Dynamic memory
+    // new_op ::= new T  returns T*
+    pFloat = new float;
+    *pFloat = 89.76;
+
+    for (int index = 0; index < 10000; ++index)
+    {
+        pFloat = new float;
+        *pFloat = index;
+
+        //Deleting a pointer twice will crash or corrupt memory
+        delete pFloat;
+        pFloat = nullptr;
+
+        //Ensure you call delete for each pointer you allocate using new
+        delete pFloat;
+        pFloat = nullptr;
+        //*pFloat = index; //Using a deallocated pointer may crash or corrupt
+    }
+
+    //Pointer assignment must exactly match the types used (no coercion)
+    // pFloat = float*
+    // someFloats[1] = float
+    // &(Et) = T*
+    // &(someFloats[1]) = &(float) = float*
+
 }
 
 int main()
