@@ -175,7 +175,7 @@ int AddToMovieArray(Movie* movies[], int size, Movie* movie)
 /// <remarks>
 /// More details including paragraphs of data if you want
 /// <remarks>
-void ViewMovie (Movie* movie)
+void ViewMovie ( Movie* movie )
 {
     //if (movie.title == "")
     if (!movie)
@@ -210,7 +210,7 @@ void ViewMovies( Movie* movies[], int size )
        // if (movies[index].title == "")
         //  return;
         if (movies[index]);
-        ViewMovie(movies[index]);
+            ViewMovie(movies[index]);
     };
 }
 
@@ -276,6 +276,7 @@ void RemoveMovieFromArray(Movie* movies[], int size, Movie* movie)
 
 void DeleteMovie(Movie* movies[], int size)
 {
+    //Get movie to delete
     std::cout << "Enter the movie ID to delete: ";
     int id = ReadInt(1);
 
@@ -377,8 +378,73 @@ void PointerDemo()
 
 }
 
+// Pointers vs pass by ref
+void EditMovieWithPassByReference(Movie& movie)  //C++ with pass by ref, preferred
+{
+    movie.title = ReadString("Enter the new title: ", true);
+
+    std::cout << "Enter the new run length: ";
+    movie.runLength = ReadInt(0);
+}
+
+//Switching from ref to pointers
+// 1. Change ref parameter to pointer
+// 2. Validate the parameter
+// 3. Dereference to geet underlying value or use pointer access op
+void EditMovieWithPointer(Movie* movie)  //C with pointers, only if needed
+{
+    if (movie == nullptr)
+        return;
+
+    //Movie.title = ReadString("Enter the new title: ", true);
+    movie->title = ReadString("Enter the new title: ", true);
+
+    std::cout << "Enter the new run length: ";
+    movie->runLength = ReadInt(0);
+}
+
+void ArrayAndPointerDemo()
+{
+    const int MaxSize = 100;
+
+    int numbers[MaxSize];
+
+    for (int index = 0; index < MaxSize; ++index)
+        numbers[index] = index + 1;
+
+    for (int index = 0; index < MaxSize; ++index)
+        std::cout << numbers[index] << std::endl;
+
+    //Arrays and pointers are interchangeable
+    // - Can assign a pointer to an array and vise versa
+    // - Can use array element operator on pointer
+    // - Can use pointer dereference an array variable
+    // - Can use either array element operator or pointer arithmetic to get to elements
+    // arr[N] = *(arr + N)
+    // Pointer arithmetic means adding/subtracting int from pointer moves the value
+    //   by a full element size, not bytes (cannot point into a partial element)
+    int* pNumbers = numbers;
+    for (int index = 0; index < MaxSize; ++index)
+        pNumbers[index] = index + 1;   //Can use array syntax with pointers and vise versa
+
+    //Can enumerate without using array element operator
+    int* pElement = numbers;
+    for (int index = 0; index < MaxSize; ++index)
+        //std::cout << numbers[index] << std::endl;
+        std::cout << *(pElement++) << std::endl;
+}
+
 int main()
 {
+    //Movie movie;
+
+    ////Calling pass by reference function
+    //EditMovieWithPassByReference(movie);
+
+    ////Calling with pointer
+    //// 4. Must use address of if normal variable, or pointer
+    //EditMovieWithhPointer(&movie);
+
     //PointerDemo();
 
     //Cannot calculate the size of an array at runtime so use a const int variable
