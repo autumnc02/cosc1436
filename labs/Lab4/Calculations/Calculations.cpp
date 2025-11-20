@@ -186,6 +186,8 @@ int main()
     ProgramInfo();
 
     ///////////////////
+    
+    //Array size
     int size = 100;
     int values[100];
 
