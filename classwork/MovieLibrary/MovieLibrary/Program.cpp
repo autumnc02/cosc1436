@@ -201,6 +201,11 @@ void ViewMovie ( Movie* movie )
     std::cout << std::endl;
 };
 
+void ViewMovie(Movie& movie)
+{
+    ViewMovie(&movie);
+}
+
 void ViewMovies( Movie* movies[], int size )
 {
     //Enumerate movies until we run out
@@ -431,7 +436,55 @@ void ArrayAndPointerDemo()
     int* pElement = numbers;
     for (int index = 0; index < MaxSize; ++index)
         //std::cout << numbers[index] << std::endl;
+        std::cout << *(numbers + index) << std::endl;
+
+    pElement = numbers;
+    for (int index = 0; index < MaxSize; ++index)
+        //std::cout << numbers[index] << std::endl;
         std::cout << *(pElement++) << std::endl;
+}
+
+int* ResizeArray(int array[], int oldSize, int newSize)
+{
+    if (newSize <= 0)
+    {
+        DisplayError("I don't think so");
+        return nullptr;
+    }
+    //int* pNewValue = new int;
+
+    //newSize > 0
+    int* pNewArray = new int[newSize];
+
+    //Init the array because we cannot use init syntax with new
+    for (int index = 0; index < newSize; ++index)
+        pNewArray[index] = 0;
+
+    //Copy values from old to new array
+    oldSize = (oldSize < newSize) ? oldSize : newSize;
+    for (int index = 0; index < oldSize; ++index)
+        pNewArray[index] = array[index];
+
+    return pNewArray;
+}
+
+void DeleteArray(int* array)
+{
+    // Rules
+    // 1. Array better have been allocated using new
+    // 2. You must delete the entire array using delete[]
+    // 3. If delete[] is called on a null ptr it will most likely crash
+    if (array)
+        delete[] array;
+    array = nullptr;
+}
+
+int youWillNeverDoThis = 100;
+int* ReturningAPointerDemo(int someValue, int values[])
+{
+    int* ptr = nullptr;
+
+
 }
 
 int main()
