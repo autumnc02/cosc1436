@@ -5,6 +5,8 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <fstream>  //File IO
+#include <sstream>  //Stringstream
 
 //Movie details
 struct Movie
@@ -120,6 +122,9 @@ std::string ReadString(std::string message, bool isRequired)
 {
     std::cout << message;
 
+    if (std::cin.peek())
+        std::cin.ignore();
+
     std::string input;
     std::getline(std::cin, input);
 
@@ -232,7 +237,7 @@ Movie* AddMovie()
     movie->runLength = ReadInt(0);
 
     std::cout << "Enter the release year (1900-2100): ";
-    std::cin >> movie->releaseYear;
+    //std::cin >> movie->releaseYear;
     movie->releaseYear = ReadInt(1900, 2100);
 
     movie->description = ReadString("Enter the optional description: ", false);
@@ -484,25 +489,123 @@ int* ReturningAPointerDemo(int someValue, int values[])
 {
     int* ptr = nullptr;
 
+    // Void cases for returning a pointer
+    // 1. Dynamically allocated memory using new
+    ptr = new int;
+    // 2. Elements of an array parameter
+    ptr = &values[0];
+    // 3. Global variables
+    ptr = &youWillNeverDoThis;
 
+    // Invalid cases
+    // 1. Parameters  (ptr = &someValue)
+    // 2. Local variables (int localVar; ptr = &localVar;)
+
+    return nullptr;
+}
+
+void ConstantDemo()
+{
+    //Contex is generally pointers and references
+    int someValue;
+    int* ptrNonconst;       //Non-const means a alue can be read or written
+    int const* ptrConst;    //Const means a value can only be read (int const*)
+    ptrNonconst = &someValue;
+
+    //Can teat a non-const valuje as const (can teat a writable value as readonly)
+    ptrConst = ptrNonconst;
+
+    //Cannot treat a const value as non-const (cannot treat a readonly value as writable)
+    //ptrNonconst = ptrConst;
+
+    //In rare cases can remove the constant if you are absolutely sure the value is writable
+    ptrNonconst = (int*)ptrConst;
+    ptrNonconst = const_cast<int*>(ptrConst);
+
+    //6 forms of constant referances and pinters, dividing line is *, read right to left
+    // 1) T *               pointer to T (ptr: RW, value: RW)
+    // 2) T * const         const pointer to T (ptr: R, value: RW)
+    // 3) T const *         pointer to const T (ptr: RW, value: R)
+    // 4) const T *         pointer to T const (ptr: RW, value: R)
+    // 5) T const * const   const pointer to const T (ptr: R, value: R)
+    // 6) const T * const   const pointer to T const (ptr: R, value: R)
+    //Forms 3 and 4 are the same, forms 5 and 6 are the same
+}
+
+void LoadMovies(Movie* movies[], int size)
+{
+    //TODO: Implement this
+}
+
+std::string QuoteString(std::string const& value)
+{
+    std::stringstream str;
+
+    //If no starting double quote, then add double quote
+    if (value.length() == 0 || value[0] != '"')
+        str << '"';
+    str << value;
+
+    //If no ending double quote, then add double quote
+    if (value.length() == 0 || value[value.length() - 1] != '"')
+        str << '"';
+
+    return str.str();
+}
+
+void SaveMovie(std::ofstream& file, Movie* pMovie)
+{
+    if (!pMovie)
+        return;
+
+    // ID, title, release year, run length, isClassic, genres, description
+    file << pMovie->id
+        << ", " << QuoteString(pMovie->title)
+        << ", " << pMovie->releaseYear
+        << ", " << pMovie->runLength
+        << ", " << (pMovie->isClassic ? 1 : 0)
+        << ", " << QuoteString(pMovie->genres)
+        << ", " << QuoteString(pMovie->description)
+        << std::endl;
+}
+
+void SaveMovies(const char* filename, Movie* movies[], int size)
+{
+    //std::fstream fs;
+    //std::ifstream ifs;
+    //std::ofstream ofs;
+
+    std::ofstream file;
+
+    //To use a file, must open it
+    // Flags (bitwise OR together)
+    //   in | out - access mode
+    //   binary - text or binary
+    //   app | ate | trunc (default) or binary
+    //        app - append (always)
+    //        ate - append (by default)
+    //        trunc - replace
+    file.open(filename, std::ios::in | std::ios::trunc);
+    if (file.fail())
+    {
+        DisplayError("unable to save movies");
+        return;
+    };
+
+    //file << "Writing to the file";
+    for (int index = 0; index < size; ++index)
+        SaveMovie(file, movies[index]);
 }
 
 int main()
 {
-    //Movie movie;
-
-    ////Calling pass by reference function
-    //EditMovieWithPassByReference(movie);
-
-    ////Calling with pointer
-    //// 4. Must use address of if normal variable, or pointer
-    //EditMovieWithhPointer(&movie);
-
-    //PointerDemo();
+    const char* FileName = "movies.csv";
 
     //Cannot calculate the size of an array at runtime so use a const int variable
     const int MaximumMovies = 100;
     Movie* movies[MaximumMovies] = {0};
+
+    LoadMovies(movies, MaximumMovies);
 
     //Display main menu
     bool done = false;
@@ -535,7 +638,7 @@ int main()
             case 'e': EditMovie(); break;
 
             case 'Q':
-            case 'q': done = true;
+            case 'q': SaveMovies(FileName, movies, MaximumMovies); done = true; break;
 
             default: DisplayError("Invalid choice"); break;
         };
